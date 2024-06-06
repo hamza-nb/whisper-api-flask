@@ -3,13 +3,19 @@ from flask_cors import CORS
 from tempfile import NamedTemporaryFile
 import whisper
 import torch
-
+import os
+cwd = os.getcwd()
+print('=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-')
+print(cwd)
+print('=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-')
+arr = os.listdir()
+print(arr)
 # Check if NVIDIA GPU is available
 torch.cuda.is_available()
 DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
 
 # Load the Whisper model:
-model = whisper.load_model("base", device=DEVICE)
+model = whisper.load_model("large", download_root=".", device=DEVICE)
 
 app = Flask(__name__)
 CORS(app)
@@ -37,7 +43,7 @@ def handler():
         # The file will get deleted when it drops out of scope.
         handle.save(temp)
         # Let's get the transcript of the temporary file.
-        result = model.transcribe(temp.name)
+        result = model.transcribe(temp.name, fp16=False, language='ar')
         # Now we can store the result object for this file.
         results.append({
             'filename': filename,
