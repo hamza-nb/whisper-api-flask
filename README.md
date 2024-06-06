@@ -115,27 +115,6 @@ docker run -p 5000:5000 whisper-api
 
 If you are having errors on MacOS please add `RUN pip3 install markupsafe==2.0.1` to the dockerfile. 
 
-## How to run the container with [Podman](https://podman.io/):
-
-``` bash
-cd /tmp
-git clone https://github.com/lablab-ai/whisper-api-flask whisper
-cd whisper
-mv Dockerfile Containerfile
-podman build --network="host" -t whisper .
-podman run --network="host" -p 5000:5000 whisper
-```
-
-Then run:
-
-``` bash
-curl -F "file=@/path/to/filename.mp3" http://localhost:5000/whisper
-```
-
-Also, from the README:
-
-> In result you should get a JSON object with the transcript in it.
-
 ## How to test the API?
 1. You can test the API by sending a POST request to the route `http://localhost:5000/whisper` with a file in it. Body should be form-data.
 2. You can use the following curl command to test the API:
@@ -145,28 +124,3 @@ curl -F "file=@/path/to/file" http://localhost:5000/whisper
 ```
 3. In result you should get a JSON object with the transcript in it.
 
-## How to deploy the API?
-This API can be deployed anywhere where Docker can be used. Just keep in mind that this setup currently using CPU for processing the audio files.
-If you want to use GPU you need to change Dockerfile and share the GPU. I won't go into this deeper as this is an introduction.
-[Docker GPU](https://docs.docker.com/config/containers/resource_constraints/)
-
-You can find the whole code [here]()
-
-**Thank you** for reading! If you enjoyed this tutorial you can find more and continue reading 
-[on our tutorial page](https://lablab.ai/t/)
-
----
-
-[![Artificial Intelligence Hackathons, tutorials and Boilerplates](https://storage.googleapis.com/lablab-static-eu/images/github/lablab-banner.jpg)](https://lablab.ai)
-
-
-
-
-## Join the LabLab Discord
-
-
-![Discord Banner 1](https://discordapp.com/api/guilds/877056448956346408/widget.png?style=banner1)  
-On lablab discord, we discuss this repo and many other topics related to artificial intelligence! Checkout upcoming [Artificial Intelligence Hackathons](https://lablab.ai) Event
-
-
-[![Acclerating innovation through acceleration](https://storage.googleapis.com/lablab-static-eu/images/github/nn-group-loggos.jpg)](https://newnative.ai)
